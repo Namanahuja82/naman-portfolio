@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
 
 const AnimatedWord = ({ word, isVisible }) => {
@@ -17,10 +16,10 @@ const About = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setVisibleIndex((prevIndex) => (prevIndex + 1) % (titleWords.length + 1));
-    },400);
+    }, 400);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [titleWords.length]);
 
   return (
     <section className="py-20 bg-gray-900" id="about">
@@ -42,7 +41,7 @@ const About = () => {
             Download Resume
           </a>
           <p className="text-lg text-gray-300 mx-auto max-w-full md:max-w-3xl leading-relaxed mb-6">
-            As a Full Stack Developer, I know JavaScript, React, Node.js, Express, MongoDB, Next.js, AWS, and Docker. I'm good at connecting third-party APIs and building web apps that can grow. I solve problems well and understand data structures from lots of practice and learning. I have certificates in Java, C++, AWS, and Python, which shows I know my stuff in data structures, web development, and cloud computing. I've built two cool things: a library system using MERN stack and a chat app that works in real-time with Express.js and Socket.IO. I always try to make things that users will like, and I work well with others. Let's team up and make something awesome!
+            As a Full Stack Developer, I know JavaScript, React, Node.js, Express, MongoDB, Next.js, AWS, and Docker. I&apos;m good at connecting third-party APIs and building web apps that can grow. I solve problems well and understand data structures from lots of practice and learning. I have certificates in Java, C++, AWS, and Python, which shows I know my stuff in data structures, web development, and cloud computing. I&apos;ve built two cool things: a library system using MERN stack and a chat app that works in real-time with Express.js and Socket.IO. I always try to make things that users will like, and I work well with others. Let&apos;s team up and make something awesome!
           </p>
         </div>
       </div>

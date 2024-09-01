@@ -25,7 +25,7 @@ const About = () => {
     <section className="py-20 bg-gray-900" id="about">
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4 md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 min-h-[4rem]">
+          <h2 className="text-3xl font-bold mb-4 md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 min-h-[6rem] md:min-h-[4rem]">
             {titleWords.map((word, index) => (
               <React.Fragment key={index}>
                 <AnimatedWord word={word} isVisible={index <= visibleIndex} />

@@ -1,37 +1,129 @@
-"use client"
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTheme } from "next-themes";
+import {
+  Cloud,
+  fetchSimpleIcons,
+  renderSimpleIcon,
+} from "react-icon-cloud";
 
-const AnimatedWord = ({ word, isVisible }) => {
+const cloudProps = {
+  containerProps: {
+    style: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      paddingTop: 40,
+      paddingBottom: 40, // Added padding at the bottom for better spacing
+      backgroundColor: "transparent", // Ensured no background color for the container
+    }
+  },
+  options: {
+    reverse: true,
+    depth: 1,
+    wheelZoom: false,
+    imageScale: 2,
+    activeCursor: "default",
+    tooltip: "native",
+    initial: [0.1, -0.1],
+    clickToFront: 500,
+    tooltipDelay: 0,
+    outlineColour: "#0000",
+    maxSpeed: 0.03, // Decreased speed for a smoother rotation
+    minSpeed: 0.01, // Decreased speed for a smoother rotation
+  }
+};
+
+const renderCustomIcon = (icon, theme) => {
+  const bgHex = theme === "light" ? "#f3f2ef" : "#080510";
+  const fallbackHex = theme === "light" ? "#6e6e73" : "#ffffff";
+  const minContrastRatio = theme === "dark" ? 2 : 1.2;
+  return renderSimpleIcon({
+    icon,
+    bgHex,
+    fallbackHex,
+    minContrastRatio,
+    size: 42,
+    aProps: {
+      href: undefined,
+      target: undefined,
+      rel: undefined,
+      onClick: (e) => e.preventDefault(),
+    }
+  });
+};
+
+const IconCloud = ({ iconSlugs }) => {
+  const [data, setData] = useState(null);
+  const { theme } = useTheme();
+
+  useEffect(() => {
+    fetchSimpleIcons({ slugs: iconSlugs }).then(setData);
+  }, [iconSlugs]);
+
+  const renderedIcons = useMemo(() => {
+    if (!data) return null;
+    return Object.values(data.simpleIcons).map((icon) =>
+      renderCustomIcon(icon, theme || "light")
+    );
+  }, [data, theme]);
+
   return (
-    <span className={`inline-block transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-      {word}
-    </span>
+    <Cloud {...cloudProps}>
+      {renderedIcons}
+    </Cloud>
   );
 };
 
+const slugs = [
+  "typescript",
+  "javascript",
+  "dart",
+  "java",
+  "react",
+  "flutter",
+  "android",
+  "html5",
+  "css3",
+  "nodedotjs",
+  "express",
+  "nextdotjs",
+  "prisma",
+  "amazonaws",
+  "postgresql",
+  "firebase",
+  "nginx",
+  "vercel",
+  "testinglibrary",
+  "jest",
+  "cypress",
+  "docker",
+  "git",
+  "jira",
+  "github",
+  "gitlab",
+  "visualstudiocode",
+  "androidstudio",
+  "sonarqube",
+  "figma",
+];
+
+function IconCloudDemo() {
+  return (
+    <div className="flex h-full w-full max-w-[32rem] items-center justify-center overflow-hidden rounded-lg">
+      <IconCloud iconSlugs={slugs} />
+    </div>
+  );
+}
+
 const About = () => {
-  const titleWords = ['Hi,', 'I', 'am', 'Naman'];
-  const [visibleIndex, setVisibleIndex] = useState(-1);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setVisibleIndex((prevIndex) => (prevIndex + 1) % (titleWords.length + 1));
-    }, 400);
-
-    return () => clearInterval(intervalId);
-  }, [titleWords.length]);
-
   return (
     <section className="py-20 bg-gray-900" id="about">
       <div className="container mx-auto px-4">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4 md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 min-h-[6rem] md:min-h-[4rem] whitespace-nowrap">
-            {titleWords.map((word, index) => (
-              <React.Fragment key={index}>
-                <AnimatedWord word={word} isVisible={index <= visibleIndex} />
-                {index < titleWords.length - 1 && ' '}
-              </React.Fragment>
-            ))}
+            Hi, I am Naman
           </h2>
           <a
             href="/2110990908_naman.pdf"
@@ -40,9 +132,9 @@ const About = () => {
           >
             Download Resume
           </a>
-          <p className="text-lg text-gray-300 mx-auto max-w-full md:max-w-3xl leading-relaxed mb-6">
-            As a Full Stack Developer, I know JavaScript, React, Node.js, Express, MongoDB, Next.js, AWS, and Docker. I&apos;m good at connecting third-party APIs and building web apps that can grow. I solve problems well and understand data structures from lots of practice and learning. I have certificates in Java, C++, AWS, and Python, which shows I know my stuff in data structures, web development, and cloud computing. I&apos;ve built two cool things: a library system using MERN stack and a chat app that works in real-time with Express.js and Socket.IO. I always try to make things that users will like, and I work well with others. Let&apos;s team up and make something awesome!
-          </p>
+          <div className="flex justify-center mb-8">
+            <IconCloudDemo />
+          </div>
         </div>
       </div>
     </section>

@@ -20,7 +20,7 @@ const Projects = () => {
     {
       title: "Portfolio Website",
       image: "/images/portf.png",
-      link: "https://github.com/Namanahuja82/portfolio-next"
+      link: "https://github.com/Namanahuja82/naman-portfolio"
     }
   ];
 
